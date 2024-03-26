@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Form,
   FormControl,
@@ -18,6 +19,7 @@ import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 
 import { FormSchema, formSchema } from "~/lib/form-schema";
 import { GeneratedCover } from "~/components/generated-cover";
+import { ThemeToggle } from "~/components/theme-toggle";
 
 export default function Home() {
   // const [values, setValues] = useState<FormSchema>({
@@ -56,9 +58,13 @@ export default function Home() {
   return (
     <div className="max-w-lg m-auto">
       <div className="p-6 w-full rounded-md">
-        <h1 className="w-full text-center text-xl font-bold mb-10">
-          Gerar Capa Alunos <span className="text-primary">Instituto Mix</span>
-        </h1>
+        <header className="flex items-center justify-between mb-10">
+          <h1 className="text-xl font-bold">
+            Gerar Capa Alunos{" "}
+            <span className="text-primary">Instituto Mix</span>
+          </h1>
+          <ThemeToggle />
+        </header>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
