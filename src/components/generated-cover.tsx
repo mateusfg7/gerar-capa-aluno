@@ -8,6 +8,7 @@ import { FormSchema } from "~/lib/form-schema";
 import model from "~/assets/model.png";
 
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {
   values: FormSchema;
@@ -15,6 +16,7 @@ type Props = {
 };
 export function GeneratedCover({ values, toggleModal }: Props) {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     aluno,
@@ -75,14 +77,15 @@ export function GeneratedCover({ values, toggleModal }: Props) {
   const InformationSquare = ({ children }: { children: React.ReactNode }) => (
     <div
       style={{ top: "34%", bottom: "18%", left: "26.3%", right: "29.5%" }}
-      className="absolute"
+      data-loading={isLoading}
+      className="absolute data-[loading='true']:hidden"
     >
       <div className="w-full h-full relative">{children}</div>
     </div>
   );
 
   return (
-    <div className="fixed bg-black/80 inset-0">
+    <div className="fixed bg-black/50 inset-0">
       <div
         style={{ width: isDownloading ? "max-content" : "100%" }}
         className="relative h-full flex items-center justify-center"
@@ -98,9 +101,20 @@ export function GeneratedCover({ values, toggleModal }: Props) {
         >
           <Image
             src={model}
+            data-loading={isLoading}
+            onLoadingComplete={() => setIsLoading(false)}
             alt="Cover Model"
-            className="object-contain w-full h-full"
+            className="object-contain w-full h-full data-[loading='true']:opacity-0"
           />
+
+          {isLoading && (
+            <>
+              <Skeleton className="w-full h-full absolute rounded-2xl bg-secondary/50" />
+              <div className="w-full h-full absolute flex rounded-2xl justify-center items-center text-secondary-foreground backdrop-blur">
+                <span>Gerando imagem...</span>
+              </div>
+            </>
+          )}
 
           <InformationSquare>
             <span className="absolute top-[6%] left-[19%] right-[6%] whitespace-nowrap overflow-hidden text-ellipsis">
@@ -148,16 +162,16 @@ export function GeneratedCover({ values, toggleModal }: Props) {
       </div>
       <div className="fixed left-1/2 -translate-x-1/2 bottom-10 flex gap-2">
         <Button
-          disabled={isDownloading}
+          disabled={isDownloading || isLoading}
           onClick={toggleModal}
           variant="ghost"
-          className="flex gap-2"
+          className="flex gap-2 dark:text-secondary dark:hover:text-secondary-foreground"
         >
           <X size="1rem" />
-          <span>Close</span>
+          <span>Fechar</span>
         </Button>
         <Button
-          disabled={isDownloading}
+          disabled={isDownloading || isLoading}
           onClick={handleDownload}
           className="flex gap-2"
         >
@@ -166,7 +180,7 @@ export function GeneratedCover({ values, toggleModal }: Props) {
           ) : (
             <DownloadCloud size="1rem" />
           )}
-          <span>Download</span>
+          <span>Baixar</span>
         </Button>
       </div>
     </div>
