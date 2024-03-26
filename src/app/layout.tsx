@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "~/components/theme-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -17,7 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={inter.variable}>{children}</body>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <body className={inter.variable}>{children}</body>
+      </ThemeProvider>
     </html>
   );
 }
