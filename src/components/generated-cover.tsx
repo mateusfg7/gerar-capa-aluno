@@ -9,6 +9,7 @@ import model from "~/assets/model.png";
 
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { toast } from "sonner";
 
 type Props = {
   values: FormSchema;
@@ -63,12 +64,19 @@ export function GeneratedCover({ values, toggleModal }: Props) {
 
     console.log(element);
 
-    await domToPng(element).then((data) => {
-      const link = document.createElement("a");
-      link.href = data;
-      link.download = `${aluno}.png`;
-      link.click();
-    });
+    await domToPng(element)
+      .then((data) => {
+        const link = document.createElement("a");
+        link.href = data;
+        link.download = `${aluno}.png`;
+        link.click();
+
+        toast.success("Imagem baixada com sucesso!");
+      })
+      .catch((e) => {
+        toast.error("Erro ao baixar imagem.");
+        console.log(e);
+      });
 
     setIsDownloading(false);
     toggleModal();
