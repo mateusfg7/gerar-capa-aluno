@@ -124,6 +124,16 @@ export function GeneratedCover({ values, toggleModal }: Props) {
     };
   };
 
+  const getCourseFontSize = () => {
+    let divisor = 38;
+
+    if (curso.length < 30) divisor = 31;
+    else if (curso.length < 36) divisor = curso.length + 2;
+
+    if (isDownloading) return `calc(2000px/${divisor})`;
+    else return `calc(95vh/${divisor})`;
+  };
+
   const printRef = useRef<HTMLDivElement>(null);
   async function handleDownload() {
     if (!printRef.current) return;
@@ -210,7 +220,7 @@ export function GeneratedCover({ values, toggleModal }: Props) {
 
             <span
               style={{
-                fontSize: isDownloading ? "calc(2000px/38)" : "calc(95vh/38)",
+                fontSize: getCourseFontSize(),
               }}
               className="absolute top-[36%] left-[19%] right-[6%] whitespace-nowrap overflow-hidden text-ellipsis"
             >
