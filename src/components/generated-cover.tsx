@@ -99,6 +99,31 @@ export function GeneratedCover({ values, toggleModal }: Props) {
     return firstDays.map((day) => day.short).join(", ") + " e " + lastDay.short;
   };
 
+  const formattedHorario = () => {
+    let inicio: string;
+    let fim: string;
+
+    const splittedInicio = inicioDoHorario.split(":");
+    const splittedFim = fimDoHorario.split(":");
+
+    if (splittedInicio[1] === "00") {
+      inicio = splittedInicio[0] + "h";
+    } else {
+      inicio = splittedInicio.join(":");
+    }
+
+    if (splittedFim[1] === "00") {
+      fim = splittedFim[0] + "h";
+    } else {
+      fim = splittedFim.join(":");
+    }
+
+    return {
+      inicio,
+      fim,
+    };
+  };
+
   const printRef = useRef<HTMLDivElement>(null);
   async function handleDownload() {
     if (!printRef.current) return;
@@ -197,11 +222,11 @@ export function GeneratedCover({ values, toggleModal }: Props) {
             </span>
 
             <span className="absolute top-[65%] left-[37%] right-[50%]">
-              {inicioDoHorario}
+              {formattedHorario().inicio}
             </span>
 
-            <span className="absolute top-[65%] left-[84%] right-[6%]">
-              {fimDoHorario}
+            <span className="absolute top-[65%] left-[84.5%] right-[6%]">
+              {formattedHorario().fim}
             </span>
 
             <span
