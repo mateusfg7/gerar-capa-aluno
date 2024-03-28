@@ -231,11 +231,11 @@ export function GeneratedCover({ values, toggleModal }: Props) {
               {formattedDiasDeAula()}
             </span>
 
-            <span className="absolute top-[65%] left-[37%] right-[50%]">
+            <span className="absolute top-[65%] left-[36%] right-[50%] text-center">
               {formattedHorario().inicio}
             </span>
 
-            <span className="absolute top-[65%] left-[84.5%] right-[6%]">
+            <span className="absolute top-[65%] left-[84%] right-[6%] text-center">
               {formattedHorario().fim}
             </span>
 
