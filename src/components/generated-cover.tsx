@@ -134,6 +134,18 @@ export function GeneratedCover({ values, toggleModal }: Props) {
     else return `calc(95vh/${divisor})`;
   };
 
+  const getUserPasswordFontSize = () => {
+    const totalLenght = usuario.length + "Senha ".length + senha.length;
+
+    let divisor = 38;
+
+    if (totalLenght < 29) divisor = 31;
+    else if (totalLenght < 35) divisor = totalLenght + 3;
+
+    if (isDownloading) return `calc(2000px/${divisor})`;
+    else return `calc(95vh/${divisor})`;
+  };
+
   const printRef = useRef<HTMLDivElement>(null);
   async function handleDownload() {
     if (!printRef.current) return;
@@ -211,7 +223,12 @@ export function GeneratedCover({ values, toggleModal }: Props) {
               {aluno}
             </span>
 
-            <span className="absolute flex justify-between top-[20.8%] left-[22%] right-[6%]">
+            <span
+              style={{
+                fontSize: getUserPasswordFontSize(),
+              }}
+              className="absolute flex justify-between gap-1 top-[20.8%] left-[22%] right-[6%] whitespace-nowrap"
+            >
               <span>{usuario}</span>
               <span>
                 <span className="font-normal">Senha:</span> <span>{senha}</span>
