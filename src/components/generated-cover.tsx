@@ -30,27 +30,74 @@ export function GeneratedCover({ values, toggleModal }: Props) {
     usuario,
   } = values;
 
-  const formattedDiasDeAula = () => {
-    if (diasDeAula.length === 0) {
-      return "";
-    }
-
-    if (diasDeAula.length === 1) {
-      return diasDeAula[0];
-    }
-
-    if (diasDeAula.length === 2) {
-      return diasDeAula.join(" e ");
-    }
-
-    return diasDeAula.join(", ");
-  };
-
   const padZero = (num: number) => (num < 10 ? `0${num}` : num);
   const formattedDate = (date: Date) =>
     `${padZero(date.getDate() + 1)}/${padZero(date.getMonth() + 1)}/${String(
       date.getFullYear()
     ).slice(2)}`;
+
+  const weeklyDays = [
+    {
+      id: "seg",
+      short: "Seg",
+      mid: "Segunda",
+      long: "segunda-feira",
+    },
+    {
+      id: "ter",
+      short: "Ter",
+      mid: "Terça",
+      long: "terça-feira",
+    },
+    {
+      id: "qua",
+      short: "Qua",
+      mid: "Quarta",
+      long: "quarta-feira",
+    },
+    {
+      id: "qui",
+      short: "Qui",
+      mid: "Quinta",
+      long: "quinta-feira",
+    },
+    {
+      id: "sex",
+      short: "Sex",
+      mid: "Sexta",
+      long: "sexta-feira",
+    },
+    {
+      id: "sab",
+      short: "Sab",
+      mid: "Sábado",
+      long: "sábado",
+    },
+  ];
+  const formattedDiasDeAula = () => {
+    const days = weeklyDays.filter((day) => diasDeAula.includes(day.id));
+
+    if (diasDeAula.length === 0) {
+      return "";
+    }
+
+    if (diasDeAula.length === 1) {
+      return days[0].long;
+    }
+
+    if (diasDeAula.length === 2) {
+      return days.map((day) => day.mid).join(" e ");
+    }
+
+    const firstDays = days.slice(0, -1);
+    const lastDay = days.slice(-1)[0];
+
+    if (diasDeAula.length === 3) {
+      return firstDays.map((day) => day.mid).join(", ") + " e " + lastDay.mid;
+    }
+
+    return firstDays.map((day) => day.short).join(", ") + " e " + lastDay.short;
+  };
 
   const printRef = useRef<HTMLDivElement>(null);
   async function handleDownload() {
