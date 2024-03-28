@@ -241,7 +241,7 @@ export function GeneratedCover({ values, toggleModal }: Props) {
 
             <span
               style={{
-                fontSize: isDownloading ? "calc(2000px/37)" : "calc(95vh/37)",
+                fontSize: isDownloading ? "calc(2000px/38)" : "calc(95vh/38)",
               }}
               className="absolute top-[81%] left-[32.5%] right-[51%]"
             >
