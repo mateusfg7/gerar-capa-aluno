@@ -22,32 +22,34 @@ import { GeneratedCover } from "~/components/generated-cover";
 import { ThemeToggle } from "~/components/theme-toggle";
 
 export default function Home() {
+  const DEFALT_VALUES = {
+    aluno: "",
+    usuario: "",
+    senha: "1234",
+    curso: "",
+    diasDeAula: [],
+    inicioDoHorario: "",
+    fimDoHorario: "",
+    inicioDoCurso: new Date(),
+  };
+
   // const [values, setValues] = useState<FormSchema>({
   //   aluno: "Mateus Felipe Gonçalves",
   //   usuario: "mateusfelipe",
   //   senha: "1234",
-  //   curso: "Montagem e Manutenção | Dev. Games | Aux. Administrativo",
-  //   diasDeAula: ["Seg", "Ter"],
+  //   curso: "Infomix",
+  //   diasDeAula: ["seg", "qua", "sex"],
   //   inicioDoHorario: "08:00",
   //   fimDoHorario: "10:00",
   //   inicioDoCurso: new Date(),
   // });
-  const [values, setValues] = useState<FormSchema>();
+  const [values, setValues] = useState<FormSchema>(DEFALT_VALUES);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      aluno: "",
-      usuario: "",
-      senha: "1234",
-      curso: "",
-      diasDeAula: ["Seg"],
-      inicioDoHorario: "",
-      fimDoHorario: "",
-      inicioDoCurso: new Date(),
-    },
+    defaultValues: DEFALT_VALUES,
   });
 
   function onSubmit(values: FormSchema) {
@@ -146,19 +148,20 @@ export default function Home() {
                   <FormControl>
                     <ToggleGroup
                       type="multiple"
-                      defaultValue={["Seg"]}
+                      value={form.getValues("diasDeAula")}
+                      defaultValue={values.diasDeAula}
                       onValueChange={(values) =>
                         form.setValue("diasDeAula", values)
                       }
                       variant="outline"
                       className="justify-between"
                     >
-                      <ToggleGroupItem value="Seg">Segunda</ToggleGroupItem>
-                      <ToggleGroupItem value="Ter">Terça</ToggleGroupItem>
-                      <ToggleGroupItem value="Qua">Quarta</ToggleGroupItem>
-                      <ToggleGroupItem value="Qui">Quinta</ToggleGroupItem>
-                      <ToggleGroupItem value="Sex">Sexta</ToggleGroupItem>
-                      <ToggleGroupItem value="Sab">Sábado</ToggleGroupItem>
+                      <ToggleGroupItem value="seg">Segunda</ToggleGroupItem>
+                      <ToggleGroupItem value="ter">Terça</ToggleGroupItem>
+                      <ToggleGroupItem value="qua">Quarta</ToggleGroupItem>
+                      <ToggleGroupItem value="qui">Quinta</ToggleGroupItem>
+                      <ToggleGroupItem value="sex">Sexta</ToggleGroupItem>
+                      <ToggleGroupItem value="sab">Sábado</ToggleGroupItem>
                     </ToggleGroup>
                   </FormControl>
                   <FormDescription>
